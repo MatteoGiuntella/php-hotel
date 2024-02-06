@@ -37,8 +37,24 @@ $hotels = [
         'vote' => 2,
         'distance_to_center' => 50
     ],
-
+    
 ];
+$userSearch = [];
+$searchParking = $_GET['parking'] != 0 ? $_GET['parking'] : '';
+$searchVote = $_GET['valutation'] != 0 ? $_GET['valutation'] : '';
+
+foreach ($hotels as $hotel) {
+
+    $luxury = $hotel['vote'] >= intval($searchVote);
+    $rentCar = ($searchParking == 'parking' && $hotel['parking']) || ($searchParking == 'no-parking' && !$hotel['parking'] );
+    
+    if(($luxury && $_GET['valutation'] != 0) || $_GET['valutation'] == 0){
+        if(($rentCar && $_GET['parking'] != 0) || $_GET['parking'] == 0){
+            $userSearch[] = $hotel;
+        }
+    }
+        
+}
 
 ?>
 <!DOCTYPE html>
@@ -53,43 +69,65 @@ $hotels = [
 
 <body>
 
-    <table class="table">
+    <div class=" container ">
 
-        <thead>
+        <div class=" text-center ">
+            <h1>Cerca il tuo Hotel</h1>
+        </div>
+        <form action="" class="d-flex" method="GET">
+             <select name="parking" class="form-select" aria-label="Default select example">
+                <option value="0" selected>Parking?</option>
+                <option value="no-parking">no</option>
+                <option value="parking">yes</option>
+            </select>
+            <select name="valutation" class="form-select" aria-label="Default select example">
+                <option value="0" selected>Valutation</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
 
-            <tr>
-                <th scope="col">NOME</th>
-                <th scope="col">DESCRIPTION</th>
-                <th scope="col">PARKING</th>
-                <th scope="col">VOTE</th>
-                <th scope="col">DISTANCE TO CENTER</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-                foreach ($hotels as $singleHotel) {
+            <button type="submit" class="btn btn-primary">Ricerca</button>
+        </form>
+
+        <table class="table my-2 ">
+
+            <thead>
+
+                <tr>
+                    <th scope="col">NOME</th>
+                    <th scope="col">DESCRIPTION</th>
+                    <th scope="col">PARKING</th>
+                    <th scope="col">VOTE</th>
+                    <th scope="col">DISTANCE TO CENTER</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($userSearch as $singleHotel) {
                 ?>
-            <tr>
-               
-                    <th scope="row"><?php echo $singleHotel['name'] ?></th>
-                    <td><?php echo $singleHotel['description'] ?></td>
-                    <td><?php if ($singleHotel['parking'] == true) {
-                         echo 'parking free';
-                    }
-                    else{
-                        echo 'no parking';
-                    } ?></td>
-                    <td><?php echo $singleHotel['vote'] ?></td>
-                    <td><?php echo $singleHotel['distance_to_center'] ?></td>
-            </tr>
-          
-        <?php
+                    <tr>
+
+                        <th scope="row"><?php echo $singleHotel['name'] ?></th>
+                        <td><?php echo $singleHotel['description'] ?></td>
+                        <td><?php if ($singleHotel['parking'] == true) {
+                                echo 'parking free';
+                            } else {
+                                echo 'no parking';
+                            } ?></td>
+                        <td><?php echo $singleHotel['vote'] ?></td>
+                        <td><?php echo $singleHotel['distance_to_center'] ?></td>
+                    </tr>
+
+                <?php
                 }
-        ?>
-        </tbody>
+                ?>
+            </tbody>
 
-    </table>
-
+        </table>
+    </div>
 </body>
 
 </html>
