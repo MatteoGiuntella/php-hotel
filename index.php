@@ -66,15 +66,20 @@ $hotels = [
             </tr>
         </thead>
         <tbody>
-
-            <tr>
-                <?php
+        <?php
                 foreach ($hotels as $singleHotel) {
                 ?>
+            <tr>
+               
                     <th scope="row"><?php echo $singleHotel['name'] ?></th>
                     <td><?php echo $singleHotel['description'] ?></td>
-                    <td><?php echo $singleHotel['parking'] ?></td>
-                    <td> <?php echo $singleHotel['vote'] ?></td>
+                    <td><?php if ($singleHotel['parking'] == true) {
+                         echo 'parking free';
+                    }
+                    else{
+                        echo 'no parking';
+                    } ?></td>
+                    <td><?php echo $singleHotel['vote'] ?></td>
                     <td><?php echo $singleHotel['distance_to_center'] ?></td>
             </tr>
           
