@@ -53,7 +53,37 @@ $hotels = [
 
 <body>
 
-   
+    <table class="table">
+
+        <thead>
+
+            <tr>
+                <th scope="col">NOME</th>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">PARKING</th>
+                <th scope="col">VOTE</th>
+                <th scope="col">DISTANCE TO CENTER</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <?php
+                foreach ($hotels as $singleHotel) {
+                ?>
+                    <th scope="row"><?php echo $singleHotel['name'] ?></th>
+                    <td><?php echo $singleHotel['description'] ?></td>
+                    <td><?php echo $singleHotel['parking'] ?></td>
+                    <td> <?php echo $singleHotel['vote'] ?></td>
+                    <td><?php echo $singleHotel['distance_to_center'] ?></td>
+            </tr>
+          
+        <?php
+                }
+        ?>
+        </tbody>
+
+    </table>
 
 </body>
 
